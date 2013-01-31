@@ -14,7 +14,7 @@ For multi-method support, they are defined as:
 
 Multi-method support is for future endpoints that might require a richer API.
 
-## ``POST : /api/checkin``
+## ``POST`` : ``/api/checkin``
 Perform a device location check-in.
 
 ### Parameters
