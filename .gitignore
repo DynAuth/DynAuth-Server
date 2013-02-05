@@ -1,0 +1,7 @@
+*.py[co]
+*.swp
+*.so
+*.wp[ru]
+*.bak
+.dropbox
+desktop.ini
