@@ -10,7 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 db = SQLAlchemy(app)
 geoauth.config.db = db
 
-from geoauth.models import Device, LocationUpdateRecord, LocationUpdateTag
+from geoauth.models import Device, LocationUpdateRecord, LocationUpdateTag, APIKey, DeviceKey
 
 with app.test_request_context():
     #db.drop_all()
@@ -55,6 +55,46 @@ def check_in():
     db.session.commit()
 
     return "(%f, %f) @ %f" % (lat, lon, time)
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    assert request.method == 'POST'
+    dev = request.form.get('dev', None)
+    key = request.form.get('key', None)
+
+    if None in [dev, key]:
+        abort(400)
+
+    dkey = DeviceKey.query.filter(DeviceKey.uuid == key).filter(DeviceKey.device == None).first()
+    if dkey is None:
+        abort(403)
+
+    ndev = Device(dev)
+    db.session.add(ndev)
+    db.session.commit()
+
+    dkey.device = ndev.id
+    db.session.add(dkey)
+    db.session.commit()
+
+    return "success"
+
+@app.route('/api/request-device-key', methods=['POST'])
+def new_device_key():
+    assert request.method == 'POST'
+    api_key = request.form.get('api_key', None)
+    if api_key is None:
+        abort(400)
+    
+    key = APIKey.query.filter(APIKey.uuid == api_key).first()
+    if key is None:
+        abort(403)
+    else:
+        dkey = DeviceKey(api_key)
+        db.session.add(dkey)
+        db.session.commit()
+
+    return dkey.uuid
 
 @app.route('/test/api/checkin')
 def test_check_in():

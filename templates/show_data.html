@@ -5,7 +5,7 @@
 </head>
 <body>
 {% for device in devices %}
-    <h2>Device: {{ device.name }}</h2>
+    <h2>Device: {{ device.name }} (key: {% if device.device_key|length > 0 %}{{ device.device_key[0].uuid }}{% else %}<unknown>{% endif %})</h2>
     <table>
         <tr><th>Date/Time</th><th>Latitude</th><th>Longitude</th></tr>
         {% for update in device.updates %}

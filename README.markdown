@@ -24,4 +24,27 @@ Perform a device location check-in.
 * ``time``: the time of the check-in
 * ``dev``: the device identification string
 
+### To-do
+
+* Require sending of a device key and a secret sent **ONCE** by the server. This would harden against client spoofing to some degree.
+* Allow bulk submission to prevent API overload
+
+## ``POST`` : ``/api/register``
+Register a device on the server, authorizing the registration using a device key.
+
+### Parameters
+
+* ``dev``: the device's identifier string
+* ``key``: the device's authorization key
+
+## ``POST`` : ``/api/request-dev-key``
+Request a new device key registered to a specific API key.
+
+### Parameters
+
+* ``api_key``: a valid API key
+
+### To-do
+
+* Require authentication using some kind of secret
 
