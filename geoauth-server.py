@@ -74,7 +74,7 @@ def test_check_in(device):
         output = check_in()
     return output
 
-@app.route('/data')
+@app.route('/admin/data/')
 def server_ident():
     devices = Device.query.all()
     return render_template("show_data.html", devices=devices)
