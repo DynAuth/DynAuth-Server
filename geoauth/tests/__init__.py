@@ -1,1 +1,1 @@
-__author__ = 'jacobokamoto'
+API_KEY = '82302924ee5f41c6ad445cfa01e68d79'

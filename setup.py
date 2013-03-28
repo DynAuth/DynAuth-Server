@@ -8,5 +8,11 @@ setup(
     license='',
     author='Jacob Okamoto',
     author_email='okam0013@umn.edu',
-    description=''
+    description='',
+    install_requires=[
+        'Flask',
+        'passlib',
+        'Flask-SQLAlchemy',
+        'requests',
+    ]
 )

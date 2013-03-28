@@ -66,9 +66,10 @@ class DeviceKey(db.Model):
         self.key = uuid4().hex
         self.activated = False
 
-    def use_key(self, device_name):
+    def use_key(self, device_name, user):
         self.activated = True
         dev = Device(self, device_name)
+        dev.user_id = user.user_id
         return dev
 
 
@@ -81,7 +82,7 @@ class Device(db.Model):
     device_key_id = Column(Integer, ForeignKey(DeviceKey.__tablename__ + ".key_id"), nullable=False, unique=True)
     device_key = relationship("DeviceKey", backref="device")
 
-    user_id = Column(Integer, ForeignKey(UserAccount.__tablename__ + ".user_id"), nullable=False, unique=True)
+    user_id = Column(Integer, ForeignKey(UserAccount.__tablename__ + ".user_id"), nullable=False)#, unique=True)
     user = relationship("UserAccount", backref="devices")
 
     def __init__(self, device_key, name):

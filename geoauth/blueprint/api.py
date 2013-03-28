@@ -2,6 +2,7 @@ from flask import Blueprint, request, abort, current_app
 from geoauth.forms import LocationUpdateForm, LocationRegionForm, DeviceRegistrationForm, DeviceKeyRequestForm
 from geoauth.models import Device, DeviceKey, DeviceLocationUpdate, \
     DeviceLocationRegion, APIAccount, APIKey, UserAccount
+import dateutil.parser
 
 api_blueprint = Blueprint("geoauth_api", __name__)
 
@@ -13,12 +14,15 @@ def check_in():
         device = Device.query.filter(Device.uuid == form.device_id.data).first()
         if device is None:
             abort(404)
-        loc_upd = DeviceLocationUpdate(device, form.latitude.data, form.longitude.data, form.time.data)
+        loc_upd = DeviceLocationUpdate(device, form.latitude.data, form.longitude.data, dateutil.parser.parse(form.time.data))
         current_app.db.session.add(loc_upd)
         current_app.db.session.commit()
 
         return "OK"
     else:
+        print form.errors
+        print form.time.data
+        print request.form['time']
         abort(400)
 
 
@@ -52,7 +56,7 @@ def register_device():
         if dkey is None:
             abort(403)
 
-        device = dkey.use_key(form.device_name)
+        device = dkey.use_key(form.device_name.data, user)
         current_app.db.session.add(device)
         current_app.db.session.add(dkey)
         current_app.db.session.commit()

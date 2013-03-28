@@ -5,7 +5,7 @@ class LocationUpdateForm(Form):
     device_id = TextField("device_id", validators=[Required()])
     latitude = FloatField("latitude", validators=[Required()])
     longitude = FloatField("longitude", validators=[Required()])
-    time = DateTimeField("time", validators=[Required()])
+    time = TextField("time", validators=[Required()])
 
 
 class LocationRegionForm(LocationUpdateForm):

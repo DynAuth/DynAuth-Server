@@ -2,6 +2,7 @@ from flask import Flask, current_app, request, g
 from geoauth.config import db
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/geoauth-test-db.sqlite3'
 app.db = db
 db.init_app(app)
 db.app = app
