@@ -132,6 +132,7 @@ class DeviceLocationRegion(db.Model):
         self.name = name
 
     def location_in_region(self, location):
+        print self.radius
         if distance_on_unit_sphere(self.latitude, self.longitude,
                                    location.latitude, location.longitude) <= self.radius:
             return True
@@ -139,3 +140,15 @@ class DeviceLocationRegion(db.Model):
             return False
 
 
+class Challenge(db.Model):
+    challenge_id = Column(Integer, primary_key=True)
+
+    challenge_key = Column(String(32), unique=True, nullable=False)
+
+    region_id = Column(Integer, ForeignKey(DeviceLocationRegion.__tablename__ + ".region_id"), nullable=False)
+    region = relationship("DeviceLocationRegion", backref="region_challenges")
+
+    def __init__(self, region):
+        self.challenge_key = uuid4().hex
+        self.region_id = region.region_id
+        self.region = region

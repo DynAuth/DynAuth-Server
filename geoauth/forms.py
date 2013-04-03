@@ -25,3 +25,12 @@ class DeviceKeyRequestForm(Form):
     api_key = TextField("api_key", validators=[Required()])
 
 
+class ChallengeRequestForm(Form):
+    api_key = TextField("api_key", validators=[Required()])
+    username = TextField("username", validators=[Required()])
+
+
+class ChallengeResponseForm(Form):
+    api_key = TextField("api_key", validators=[Required()])
+    challenge_key = TextField("challenge_key", validators=[Required()])
+    challenge_response = TextField("challenge_response", validators=[Required()])

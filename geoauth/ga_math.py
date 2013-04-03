@@ -32,4 +32,6 @@ def distance_on_unit_sphere(lat1, long1, lat2, long2):
 
     # Remember to multiply arc by the radius of the earth 
     # in your favorite set of units to get length.
-    return arc * 6378.1
+    dist = arc * 6378.1 #6378.1
+    print dist
+    return dist
