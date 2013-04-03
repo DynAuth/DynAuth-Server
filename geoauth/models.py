@@ -18,6 +18,9 @@ class APIAccount(db.Model):
         self.username = username
         self.password = pbkdf2_sha512.encrypt(password)
 
+    def __unicode__(self):
+        return self.name
+
     def authenticate(self, password):
         return pbkdf2_sha512.verify(password, self.password)
 

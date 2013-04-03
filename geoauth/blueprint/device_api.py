@@ -4,10 +4,10 @@ from geoauth.models import Device, DeviceKey, DeviceLocationUpdate, \
     DeviceLocationRegion, APIAccount, APIKey, UserAccount
 import dateutil.parser
 
-api_blueprint = Blueprint("geoauth_api", __name__)
+device_api_blueprint = Blueprint("geoauth_device_api", __name__)
 
 
-@api_blueprint.route('/device/check-in', methods=['POST'])
+@device_api_blueprint.route('/device/check-in', methods=['POST'])
 def check_in():
     form = LocationUpdateForm(csrf_enabled=False)
     if form.validate_on_submit():
@@ -26,7 +26,7 @@ def check_in():
         abort(400)
 
 
-@api_blueprint.route('/device/add-region', methods=['POST'])
+@device_api_blueprint.route('/device/add-region', methods=['POST'])
 def add_region():
     form = LocationRegionForm(csrf_enabled=False)
     if form.validate_on_submit():
@@ -42,7 +42,7 @@ def add_region():
         abort(400)
 
 
-@api_blueprint.route('/device/register', methods=['POST'])
+@device_api_blueprint.route('/device/register', methods=['POST'])
 def register_device():
     form = DeviceRegistrationForm(csrf_enabled=False)
     if form.validate_on_submit():
@@ -64,16 +64,3 @@ def register_device():
         return device.uuid
     else:
         abort(400)
-
-@api_blueprint.route('/service/request-device-key', methods=['POST'])
-def request_device_key():
-    form = DeviceKeyRequestForm(csrf_enabled=False)
-    if form.validate_on_submit():
-        api_key = APIKey.query.filter(APIKey.key == form.api_key.data).first()
-        if api_key is None:
-            abort(403)
-        dkey = DeviceKey(api_key)
-        current_app.db.session.add(dkey)
-        current_app.db.session.commit()
-
-        return dkey.key

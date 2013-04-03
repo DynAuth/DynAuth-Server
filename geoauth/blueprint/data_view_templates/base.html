@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeoAuth Server</title>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="row-fluid" style="margin: 12px; width: 940px">
+<h1>GeoAuth Server</h1>
+<h2>{{ PAGE_TITLE }}</h2>
+<h4>
+    <a href="{{ url_for('geoauth_data_view.api_key_list') }}">API Keys</a> |
+    <a href="{{ url_for('geoauth_data_view.device_key_list') }}">Device Keys</a> |
+    <a href="{{ url_for('geoauth_data_view.device_list') }}">Device List</a>
+</h4>
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>

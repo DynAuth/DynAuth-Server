@@ -8,13 +8,15 @@ def register_device():
     """
     Register a test device
     """
-    dkey_req = rq.post('http://localhost:5000/api/service/request-device-key', {'api_key': API_KEY})
+    dkey_req = rq.post('http://localhost:8000/api/service/request-device-key', {'api_key': API_KEY})
     dkey = dkey_req.content
+    if len(dkey) != 32:
+        raise ValueError(dkey)
 
-    dreg_req = rq.post('http://localhost:5000/api/device/register', {'username': 'okam0013', 'password': 'porkchop', 'device_key': dkey, 'device_name': 'test-system-%s'%dkey})
+    dreg_req = rq.post('http://localhost:8000/api/device/register', {'username': 'okam0013', 'password': 'porkchop', 'device_key': dkey, 'device_name': 'test-system-%s'%dkey})
     duuid = dreg_req.content
     if len(duuid) != 32:
-        raise ValueError
+        raise ValueError(duuid)
     return duuid
 
 
@@ -31,7 +33,7 @@ def test_device(iters=10):
     print uuid
     for i in range(iters):
         lat, lon = random_msp_location()
-        post = rq.post('http://localhost:5000/api/device/check-in', {'device_id': uuid, 'latitude': lat, 'longitude': lon, 'time': str(datetime.utcnow())})
+        post = rq.post('http://localhost:8000/api/device/check-in', {'device_id': uuid, 'latitude': lat, 'longitude': lon, 'time': str(datetime.utcnow())})
         assert post.status_code == 200
 
 test_device()
