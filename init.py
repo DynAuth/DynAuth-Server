@@ -19,6 +19,7 @@ aa = APIAccount('okam0013', 'porkchop')
 db.session.add(aa)
 db.session.commit()
 ak = APIKey(aa, 'testing')
+ak.key = "570915b1b5cb4db6981f463b48d09ad8"
 db.session.add(ak)
 db.session.commit()
 

@@ -6,3 +6,6 @@
 .dropbox
 .idea
 desktop.ini
+venv
+build
+dateutil
