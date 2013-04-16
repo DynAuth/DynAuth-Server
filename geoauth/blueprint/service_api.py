@@ -39,17 +39,19 @@ def request_challenge():
         regions = device.location_regions
 
         challenge_region = None
+        challenge_location = None
         for r in regions:
             for l in recent_locations:
                 if r.location_in_region(l):
                     challenge_region = r
+                    challenge_location = l
                     break
 
         if challenge_region is not None:
-            challenge = Challenge(challenge_region)
+            challenge = Challenge(challenge_region, challenge_location)
             current_app.db.session.add(challenge)
             current_app.db.session.commit()
-            return challenge.challenge_key
+            return challenge.challenge_key + "\n" + challenge_location.time.__format__("%H:%M:%S") + "\n" + challenge_location.time.__format__("%Y-%m-%d")
         else:
             abort(500)
     abort(400)

@@ -148,7 +148,12 @@ class Challenge(db.Model):
     region_id = Column(Integer, ForeignKey(DeviceLocationRegion.__tablename__ + ".region_id"), nullable=False)
     region = relationship("DeviceLocationRegion", backref="region_challenges")
 
-    def __init__(self, region):
+    location_id = Column(Integer, ForeignKey(DeviceLocationUpdate.__tablename__ + ".update_id"), nullable=False)
+    location = relationship("DeviceLocationUpdate", backref="update_challenges")
+
+    def __init__(self, region, location):
         self.challenge_key = uuid4().hex
         self.region_id = region.region_id
+        self.location_id = location.update_id
         self.region = region
+        self.location = location
