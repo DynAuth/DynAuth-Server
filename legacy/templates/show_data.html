@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show Data | GeoAuth Server v{{ SERVER_VERSION }}</title>
+</head>
+<body>
+{% for device in devices %}
+    <h2>Device: {{ device.name }} (key: {% if device.device_key|length > 0 %}{{ device.device_key[0].uuid }}{% else %}<unknown>{% endif %})</h2>
+    <table>
+        <tr><th>Date/Time</th><th>Latitude</th><th>Longitude</th></tr>
+        {% for update in device.updates %}
+            <tr><td>{{ update.timestamp }}</td><td>{{ update.latitude }}</td><td>{{ update.longitude }}</td></tr>
+        {% endfor %}
+    </table>
+{% endfor %}
+</body>
+</html>
