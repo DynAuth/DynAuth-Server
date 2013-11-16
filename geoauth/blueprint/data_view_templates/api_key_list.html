@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-    <table class="table">
-        <tr><th>Key ID</th><th>Key</th><th>API Account</th><th>Key Name</th></tr>
-        {% for key in keys %}
-            <tr><td>{{ key.key_id }}</td><td>{{ key.key }}</td><td>{{ key.account.name }}</td><td>{{ key.name }}</td></tr>
-        {% endfor %}
-    </table>
-{% endblock %}
