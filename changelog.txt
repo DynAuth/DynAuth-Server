@@ -1,0 +1,5 @@
+--
+-version 2.0
+--
+把DynAuth的代码从Amazon中抽离出来，在DyAuth文件夹
+Amazon作为一个例子在example文件夹。
